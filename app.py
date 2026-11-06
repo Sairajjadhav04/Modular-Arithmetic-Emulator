@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request 
 from calculations import *
-
+from crt import *
 app = Flask(__name__)
 
 @app.route('/')
@@ -43,5 +43,47 @@ def calculate():
             "index.html",
             error=str(error)
         )
+
+@app.route("/crt", methods=["GET", "POST"])
+def crt_solver():
+
+    if request.method == "POST":
+
+        try:
+            remainder_input = request.form["remainders"]
+            moduli_input = request.form["moduli"]
+
+            remainders = [
+                int(x.strip())
+                for x in remainder_input.split(",")
+            ]
+
+            moduli = [
+                int(x.strip())
+                for x in moduli_input.split(",")
+            ]
+
+            solution = chinese_remainder_theorem(
+                remainders, moduli
+            )
+
+            return render_template(
+                "crt.html",
+                result=solution["result"],
+                modulus=solution["modulus"],
+                steps=solution["steps"],
+                remainder_input=remainder_input,
+                moduli_input=moduli_input
+            )
+
+        except (ValueError, TypeError) as error:
+
+            return render_template(
+                "crt.html",
+                error=str(error),
+                remainder_input=request.form.get("remainders", ""),
+                moduli_input=request.form.get("moduli", "")
+            )
+    return render_template("crt.html")
 if __name__ == "__main__":
     app.run(debug=True)

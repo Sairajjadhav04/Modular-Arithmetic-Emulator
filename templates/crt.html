@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Chinese Remainder Theorem Solver</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <p>Chinese Remainder Theorem Solver</p>
+    </div>
+
+    <div class="calculator">
+
+        <h2>CRT Calculator</h2>
+
+        <p>Enter comma-separated values.</p>
+
+        <form action="/crt" method="POST">
+
+            <div class="form-group">
+                <label>Remainders (a values)</label>
+
+                <input
+                    type="text"
+                    name="remainders"
+                    placeholder="Example: 2, 3, 2"
+                    value="{{ remainder_input or '' }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Moduli (m values)</label>
+
+                <input
+                    type="text"
+                    name="moduli"
+                    placeholder="Example: 3, 5, 7"
+                    value="{{ moduli_input or '' }}"
+                    required>
+            </div>
+
+            <button type="submit">Solve CRT</button>
+
+        </form>
+
+        {% if result is defined %}
+
+        <div class="result">
+
+            <h2>Final Answer</h2>
+
+            <h1>x = {{ result }}</h1>
+
+            <p>Modulo M = {{ modulus }}</p>
+
+            <hr>
+
+            <h3>Step-by-Step Solution</h3>
+
+            {% for step in steps %}
+                <p style="margin-top: 12px;">
+                    {{ step }}
+                </p>
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="footer">
+        CRYPTON | Discrete Mathematics & Cryptography
+    </div>
+
+</div>
+
+</body>
+</html>
