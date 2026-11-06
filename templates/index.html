@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Modular Arithmetic</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <p>Discrete Mathematics & Cryptography Emulator</p>
+    </div>
+    <div class="calculator">
+        <h2>Modular Arithmetic Calculator</h2>
+        <form action="/calculate" method="POST">
+            <div class="form-group">
+                <label>Enter Number A</label>
+                <input type="number" name="a" required>
+            </div>
+            <div class="form-group">
+                <label>Enter Number B</label>
+                <input type="number" name="b" required>
+            </div>
+            <div class="form-group">
+                <label>Enter Modulus (M)</label>
+                <input type="number" name="m" min="1" required>
+            </div>
+            <div class="form-group">
+                <label>Select Operation</label>
+                <select name="operation">
+                    <option value="addition">Addition</option>
+                    <option value="subtraction">Subtraction</option>
+                    <option value="multiplication">Multiplication</option>
+                    <option value="division">Division</option>
+                    <option value="modulo">Modulo</option>
+                    <option value="gcd">GCD</option>
+                </select>
+            </div>
+            <button type="submit">Calculate Result</button>
+        </form>
+        {% if result is defined %}
+        <div class="result">
+            <h2>Calculation Result</h2>
+            <h1>{{ result }}</h1>
+            <p>Operation completed successfully.</p>
+        </div>
+        {% endif %}
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+         Modular Arithmetic Learning Emulator
+    </div>
+</div>
+</body>
+</html>
