@@ -1,69 +1,135 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title> Modular Arithmetic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypton | Modular Arithmetic</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
+
 <div class="container">
-    <div class="header">
-        <center><p>MODULAR ARITHEMATIC EMULATOR</p></center>
-    </div>
+
+    <header class="header">
+        <div class="logo">CRYPTON</div>
+        <p class="tagline">
+            Discrete Mathematics & Cryptography Emulator
+        </p>
+    </header>
+
+    <nav class="navbar">
+        <a href="/" class="active">Modular Arithmetic</a>
+        <a href="/crt">CRT Solver</a>
+        <a href="/euler">Euler's Theorem</a>
+        <a href="/fermat">Fermat's Theorem</a>
+    </nav>
+
+    <section class="page-heading">
+        <h1>Modular Arithmetic Calculator</h1>
+        <p>
+            Perform modular operations and understand
+            the fundamentals of discrete mathematics.
+        </p>
+    </section>
+
     <div class="calculator">
-        <h2>Modular Arithmetic Calculator</h2>
+
+        <h2>Enter Calculation Details</h2>
+
         <form action="/calculate" method="POST">
+
             <div class="form-group">
-                <label>Enter Number A</label>
-                <input type="number" name="a" required>
+                <label>Number A</label>
+                <input type="number" name="a"
+                       value="{{ a if a is defined else '' }}"
+                       placeholder="Enter first number" required>
             </div>
+
             <div class="form-group">
-                <label>Enter Number B</label>
-                <input type="number" name="b" required>
+                <label>Number B</label>
+                <input type="number" name="b"
+                       value="{{ b if b is defined else '' }}"
+                       placeholder="Enter second number" required>
             </div>
+
             <div class="form-group">
-                <label>Enter Modulus (M)</label>
-                <input type="number" name="m" min="1" required>
+                <label>Modulus (M)</label>
+                <input type="number" name="m" min="1"
+                       value="{{ m if m is defined else '' }}"
+                       placeholder="Enter modulus" required>
             </div>
+
             <div class="form-group">
                 <label>Select Operation</label>
-                <select name="operation">
-                    <option value="addition">Addition</option>
-                    <option value="subtraction">Subtraction</option>
-                    <option value="multiplication">Multiplication</option>
-                    <option value="division">Division</option>
-                    <option value="modulo">Modulo</option>
-                    <option value="gcd">GCD</option>
+
+                <select name="operation" required>
+                    <option value="addition"
+                        {% if operation == 'addition' %}selected{% endif %}>
+                        Addition
+                    </option>
+
+                    <option value="subtraction"
+                        {% if operation == 'subtraction' %}selected{% endif %}>
+                        Subtraction
+                    </option>
+
+                    <option value="multiplication"
+                        {% if operation == 'multiplication' %}selected{% endif %}>
+                        Multiplication
+                    </option>
+
+                    <option value="division"
+                        {% if operation == 'division' %}selected{% endif %}>
+                        Division
+                    </option>
+
+                    <option value="modulo"
+                        {% if operation == 'modulo' %}selected{% endif %}>
+                        Modulo
+                    </option>
+
+                    <option value="gcd"
+                        {% if operation == 'gcd' %}selected{% endif %}>
+                        GCD
+                    </option>
                 </select>
             </div>
+
             <button type="submit">Calculate Result</button>
+
         </form>
+
         {% if result is defined %}
+
         <div class="result">
+
             <h2>Calculation Result</h2>
+
             <h1>{{ result }}</h1>
+
             <p>Operation completed successfully.</p>
+
         </div>
-        <div style="margin-top: 25px; text-align: center;">
 
-        <a href="/crt">
-            <button type="button">
-                Chinese Remainder Theorem Solver
-            </button>
-        </a>
-
-</div>
         {% endif %}
+
         {% if error %}
         <div class="error">
             {{ error }}
         </div>
         {% endif %}
+
     </div>
-    <div class="footer">
-         Modular Arithmetic Learning Emulator
-    </div>
+
+    <footer class="footer">
+        CRYPTON | Modular Arithmetic Learning Emulator
+    </footer>
+
 </div>
+
 </body>
 </html>

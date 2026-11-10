@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Euler's Theorem</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="logo">Euler Theorem</div>
+        <p class="tagline">Modular Arithmetic</p>
+    </header>
+
+    <nav class="navbar">
+        <a href="/">Modular Arithmetic</a>
+        <a href="/crt">CRT Solver</a>
+        <a href="/euler" class="active">Euler's Theorem</a>
+        <a href="/fermat">Fermat's Theorem</a>
+    </nav>
+
+    <section class="page-heading">
+        <h1>Euler's Theorem Solver</h1>
+        <p>Calculate modular powers using Euler's Totient Function.</p>
+    </section>
+
+    <section class="calculator">
+
+        <h2>Enter Values</h2>
+
+        <p>
+            Euler's theorem states that if gcd(a, n) = 1, then
+            a<sup>φ(n)</sup> ≡ 1 (mod n).
+        </p>
+
+        <form action="/euler" method="POST">
+
+            <div class="form-group">
+                <label for="a">Enter a:</label>
+                <input type="number" id="a" name="a"
+                       value="{{ a if a is defined else '' }}"
+                       placeholder="Enter value of a" required>
+            </div>
+
+            <div class="form-group">
+                <label for="n">Enter n:</label>
+                <input type="number" id="n" name="n"
+                       value="{{ n if n is defined else '' }}"
+                       placeholder="Enter value of n (greater than 1)"
+                       min="2" required>
+            </div>
+
+            <button type="submit">Calculate Euler's Theorem</button>
+
+        </form>
+
+        {% if result is defined %}
+        <div class="result">
+            <h2>Final Result</h2>
+            <p>a = {{ a }}</p>
+            <p>n = {{ n }}</p>
+            <h3>Answer: {{ result }}</h3>
+        </div>
+        {% endif %}
+
+        {% if steps %}
+        <div class="steps">
+            <h2>Step-by-Step Solution</h2>
+
+            {% for step in steps %}
+            <div class="step">
+                {{ step }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+    </section>
+
+    <footer class="footer">
+        <p>CRYPTON | Discrete Mathematics & Cryptography Emulator</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
