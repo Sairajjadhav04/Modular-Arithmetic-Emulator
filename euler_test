@@ -1,0 +1,9 @@
+from euler import euler_totient, euler_theorem
+# Test Euler Totient
+phi, numbers = euler_totient(10)
+print("Euler Totient:", phi)
+print("Coprime Numbers:", numbers)
+# Test Euler Theorem
+answer = euler_theorem(3, 10)
+for step in answer["steps"]:
+    print(step)
