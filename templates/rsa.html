@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RSA Algorithm Solver - CRYPTON</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .step-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #2563eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .step-card h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .step-card p {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .final-result {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .final-result h2 {
+            color: #207a38;
+        }
+
+        .rsa-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 15px;
+            box-sizing: border-box;
+        }
+
+        .rsa-form button {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>RSA Algorithm Solver</h1>
+    </div>
+
+    <div class="card">
+
+        <h2>Enter RSA Parameters</h2>
+
+        <form method="POST" action="/rsa" class="rsa-form">
+
+            <label>Prime Number (p):</label>
+            <input type="number" name="p"
+                   placeholder="Enter first prime number"
+                   min="2" required>
+
+            <label>Prime Number (q):</label>
+            <input type="number" name="q"
+                   placeholder="Enter second prime number"
+                   min="2" required>
+
+            <label>Public Exponent (e):</label>
+            <input type="number" name="e"
+                   placeholder="Enter public exponent"
+                   min="2" required>
+
+            <label>Message (M):</label>
+            <input type="number" name="message"
+                   placeholder="Enter message"
+                   min="0" required>
+
+            <button type="submit">
+                Solve RSA Algorithm
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if error %}
+
+    <div class="step-card">
+        <h3>Error</h3>
+        <p>{{ error }}</p>
+    </div>
+
+    {% endif %}
+
+
+    {% if result %}
+
+    <h2>RSA Final Results</h2>
+
+    <div class="final-result">
+
+        <h2>Encryption and Decryption Results</h2>
+
+        <p><b>n:</b> {{ result.n }}</p>
+
+        <p><b>Euler's Totient:</b> {{ result.phi }}</p>
+
+        <p><b>Public Key:</b>
+            {{ result.public_key }}
+        </p>
+
+        <p><b>Private Key:</b>
+            {{ result.private_key }}
+        </p>
+
+        <p><b>Encrypted Message:</b>
+            {{ result.ciphertext }}
+        </p>
+
+        <p><b>Decrypted Message:</b>
+            {{ result.decrypted }}
+        </p>
+
+    </div>
+
+
+    <h2>Complete Step-by-Step Solution</h2>
+
+    {% for step in result.steps %}
+
+    <div class="step-card">
+
+        <h3>{{ step.title }}</h3>
+
+        {% for detail in step.details %}
+
+        <p>{{ detail }}</p>
+
+        {% endfor %}
+
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+    <br>
+
+    <a href="/">Back to Home</a>
+
+</div>
+
+</body>
+</html>

@@ -1,10 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypton | Modular Arithmetic</title>
+
+    <title> Modular Arithmetic</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -15,26 +17,44 @@
 <div class="container">
 
     <header class="header">
+
         <div class="logo">Basic Modular Arithmetic</div>
+
         <p class="tagline">
             MODULAR ARITHMETIC EMULATOR
         </p>
+
     </header>
 
+
+    <!-- Navigation Bar -->
+
     <nav class="navbar">
+
         <a href="/" class="active">Modular Arithmetic</a>
+
         <a href="/crt">CRT Solver</a>
+
         <a href="/euler">Euler's Theorem</a>
+
         <a href="/fermat">Fermat's Theorem</a>
+
+        <a href="/rsa">RSA Algorithm</a>
+
     </nav>
 
+
     <section class="page-heading">
+
         <h1>Modular Arithmetic Calculator</h1>
+
         <p>
             Perform modular operations and understand
             the fundamentals of discrete mathematics.
         </p>
+
     </section>
+
 
     <div class="calculator">
 
@@ -43,30 +63,44 @@
         <form action="/calculate" method="POST">
 
             <div class="form-group">
+
                 <label>Number A</label>
+
                 <input type="number" name="a"
                        value="{{ a if a is defined else '' }}"
                        placeholder="Enter first number" required>
+
             </div>
 
+
             <div class="form-group">
+
                 <label>Number B</label>
+
                 <input type="number" name="b"
                        value="{{ b if b is defined else '' }}"
                        placeholder="Enter second number" required>
+
             </div>
 
+
             <div class="form-group">
+
                 <label>Modulus (M)</label>
+
                 <input type="number" name="m" min="1"
                        value="{{ m if m is defined else '' }}"
                        placeholder="Enter modulus" required>
+
             </div>
 
+
             <div class="form-group">
+
                 <label>Select Operation</label>
 
                 <select name="operation" required>
+
                     <option value="addition"
                         {% if operation == 'addition' %}selected{% endif %}>
                         Addition
@@ -96,12 +130,18 @@
                         {% if operation == 'gcd' %}selected{% endif %}>
                         GCD
                     </option>
+
                 </select>
+
             </div>
 
-            <button type="submit">Calculate Result</button>
+
+            <button type="submit">
+                Calculate Result
+            </button>
 
         </form>
+
 
         {% if result is defined %}
 
@@ -117,16 +157,22 @@
 
         {% endif %}
 
+
         {% if error %}
+
         <div class="error">
             {{ error }}
         </div>
+
         {% endif %}
 
     </div>
 
+
     <footer class="footer">
-        <p>Basic Modular Arithmetic Emulator</p>
+
+        <p> Modular Arithmetic Calculator</p>
+
     </footer>
 
 </div>
