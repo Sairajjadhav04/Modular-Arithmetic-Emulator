@@ -165,6 +165,7 @@ def fermat_solver():
                 a=a,
                 p=p
             )
+    return render_template('fermat.html')  
 #RSA Algorithm
 @app.route("/rsa", methods=["GET", "POST"])
 def rsa():
@@ -183,7 +184,6 @@ def rsa():
         "rsa.html",
         result=result,
         error=error
-    )
-    return render_template('fermat.html')   
+    ) 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,163 +1,217 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>RSA Algorithm Solver - CRYPTON</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RSA Algorithm Solver</title>
 
     <link rel="stylesheet"
-    href="{{ url_for('static', filename='css/style.css') }}">
-
-    <style>
-        .step-card {
-            background: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border-left: 5px solid #2563eb;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .step-card h3 {
-            color: #2563eb;
-            margin-bottom: 15px;
-        }
-
-        .step-card p {
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        .final-result {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .final-result h2 {
-            color: #207a38;
-        }
-
-        .rsa-form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 15px;
-            box-sizing: border-box;
-        }
-
-        .rsa-form button {
-            padding: 12px 20px;
-            cursor: pointer;
-        }
-    </style>
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
 <div class="container">
 
+    <!-- Header -->
     <div class="header">
-        <h1>RSA Algorithm Solver</h1>
+
+        <div class="logo">MODULAR ARITHMETIC EMULATOR</div>
+
+        <p class="tagline">
+            Learn Mathematics Through Interactive Solvers
+        </p>
+
     </div>
 
-    <div class="card">
+    <!-- Navigation -->
+    <div class="navbar">
 
-        <h2>Enter RSA Parameters</h2>
+        <a href="/">Modular Arithmetic</a>
 
-        <form method="POST" action="/rsa" class="rsa-form">
+        <a href="/crt">CRT Solver</a>
 
-            <label>Prime Number (p):</label>
-            <input type="number" name="p"
-                   placeholder="Enter first prime number"
-                   min="2" required>
+        <a href="/euler">Euler's Theorem</a>
 
-            <label>Prime Number (q):</label>
-            <input type="number" name="q"
-                   placeholder="Enter second prime number"
-                   min="2" required>
+        <a href="/fermat">Fermat's Theorem</a>
 
-            <label>Public Exponent (e):</label>
-            <input type="number" name="e"
-                   placeholder="Enter public exponent"
-                   min="2" required>
+        <a href="/rsa" class="active">RSA Solver</a>
 
-            <label>Message (M):</label>
-            <input type="number" name="message"
-                   placeholder="Enter message"
-                   min="0" required>
+    </div>
+
+    <!-- Page Heading -->
+    <div class="page-heading">
+
+        <h1>RSA Algorithm Solver</h1>
+
+        <p>
+            Encrypt and decrypt messages using the RSA public key
+            cryptography algorithm with detailed step-by-step working.
+        </p>
+
+    </div>
+
+    <!-- RSA Calculator -->
+    <div class="calculator">
+
+        <h2>RSA Calculator</h2>
+
+        <p style="color: #94a3b8; margin-bottom: 25px;">
+            Enter two prime numbers, a public exponent and a message
+            to perform RSA encryption and decryption.
+        </p>
+
+        <form method="POST" action="{{ url_for('rsa') }}">
+
+            <div class="form-group">
+
+                <label>Prime Number (p)</label>
+
+                <input
+                    type="number"
+                    name="p"
+                    placeholder="Example: 61"
+                    min="2"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Prime Number (q)</label>
+
+                <input
+                    type="number"
+                    name="q"
+                    placeholder="Example: 53"
+                    min="2"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Public Exponent (e)</label>
+
+                <input
+                    type="number"
+                    name="e"
+                    placeholder="Example: 17"
+                    min="2"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Message (M)</label>
+
+                <input
+                    type="number"
+                    name="message"
+                    placeholder="Example: 65"
+                    min="0"
+                    required
+                >
+
+            </div>
 
             <button type="submit">
-                Solve RSA Algorithm
+                Solve Using RSA
             </button>
 
         </form>
 
     </div>
 
+    <!-- Error Message -->
     {% if error %}
 
-    <div class="step-card">
-        <h3>Error</h3>
-        <p>{{ error }}</p>
+    <div class="error">
+
+        <strong>Error:</strong> {{ error }}
+
     </div>
 
     {% endif %}
 
-
+    <!-- RSA Results -->
     {% if result %}
 
-    <h2>RSA Final Results</h2>
+    <div class="result">
 
-    <div class="final-result">
+        <h2>RSA Results</h2>
 
-        <h2>Encryption and Decryption Results</h2>
+        <p><strong>Modulus (n):</strong> {{ result.n }}</p>
 
-        <p><b>n:</b> {{ result.n }}</p>
+        <p><strong>Euler's Totient φ(n):</strong> {{ result.phi }}</p>
 
-        <p><b>Euler's Totient:</b> {{ result.phi }}</p>
+        <p><strong>Public Key (e, n):</strong> {{ result.public_key }}</p>
 
-        <p><b>Public Key:</b>
-            {{ result.public_key }}
-        </p>
+        <p><strong>Private Key (d, n):</strong> {{ result.private_key }}</p>
 
-        <p><b>Private Key:</b>
-            {{ result.private_key }}
-        </p>
+        <hr>
 
-        <p><b>Encrypted Message:</b>
-            {{ result.ciphertext }}
-        </p>
+        <h2>Encryption</h2>
 
-        <p><b>Decrypted Message:</b>
+        <p>
+            <strong>Original Message:</strong>
             {{ result.decrypted }}
         </p>
 
+        <p>
+            <strong>Encrypted Message:</strong>
+            {{ result.ciphertext }}
+        </p>
+
+        <hr>
+
+        <h2>Decryption</h2>
+
+        <h1>{{ result.decrypted }}</h1>
+
+        <p>
+            The original message is successfully recovered
+            after decryption.
+        </p>
+
+        <hr>
+
+        <!-- Step-by-Step Solution -->
+        <h2>Step-by-Step Solution</h2>
+
+        <div class="steps">
+
+            {% for step in result.steps %}
+
+            <div class="step">
+
+                <strong>{{ step.title }}</strong>
+
+                <p>{{ step.details }}</p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
     </div>
-
-
-    <h2>Complete Step-by-Step Solution</h2>
-
-    {% for step in result.steps %}
-
-    <div class="step-card">
-
-        <h3>{{ step.title }}</h3>
-
-        {% for detail in step.details %}
-
-        <p>{{ detail }}</p>
-
-        {% endfor %}
-
-    </div>
-
-    {% endfor %}
 
     {% endif %}
 
-    <br>
+    <!-- Footer -->
+    <div class="footer">
 
-    <a href="/">Back to Home</a>
+        RSA Algorithm Solver | Modular Arithmetic Emulator
+
+    </div>
 
 </div>
 
